@@ -91,5 +91,5 @@ app.get('/:name', function (req, res) {
 var server = http.createServer(app);
 server.listen(8085, function () {
   var port = server.address().port;
-  console.log("Example app listening at localhost:%s", port);
+  console.log("API server is running at:%s", port);
 });
