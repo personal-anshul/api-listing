@@ -59,21 +59,21 @@ app.get('/add', function (req, res) {
 })
 
 //api to delete specific record
-app.get('/delete', function (req, res) {
-  User.findOneAndRemove({"name": req.query.name}, function(err) {
+app.get('/delete/:id', function (req, res) {
+  User.findOneAndRemove({"_id": req.params.id}, function(err) {
     if (err) {
       console.log(err);
     }
     else {
-      res.end('User successfully deleted.');
+      res.end("User successfully deleted");
     }
   });
 });
 
 //api to get specific record
-app.get('/:name', function (req, res) {
+app.get('/:id', function (req, res) {
   // get all the users
-  User.find({"name": req.params.name}, function(err, userInfo) {
+  User.find({"_id": req.params.id}, function(err, userInfo) {
     if (err) {
       console.log(err);
     }
