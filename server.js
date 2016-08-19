@@ -7,6 +7,13 @@ var express = require('express'),
 
 mongoose.connect(url);
 
+//enable CORS
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 var UserSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -17,7 +24,7 @@ var UserSchema = new mongoose.Schema({
   User = mongoose.model('User', UserSchema);
 
 //api to list all records
-app.get('/listAll', function (req, res) {
+app.get('/listAll', function (req, res, next) {
   // get all the users
   User.find({}, function(err, users) {
     if (err) {
@@ -32,7 +39,7 @@ app.get('/listAll', function (req, res) {
 });
 
 //api to add record into list
-app.get('/add', function (req, res) {
+app.get('/add', function (req, res, next) {
   //create user model
   var newUser = new User({
     "name" : req.query.name,
@@ -59,7 +66,7 @@ app.get('/add', function (req, res) {
 })
 
 //api to delete specific record
-app.get('/delete/:id', function (req, res) {
+app.get('/delete/:id', function (req, res, next) {
   User.findOneAndRemove({"_id": req.params.id}, function(err) {
     if (err) {
       console.log(err);
@@ -71,7 +78,7 @@ app.get('/delete/:id', function (req, res) {
 });
 
 //api to get specific record
-app.get('/:id', function (req, res) {
+app.get('/:id', function (req, res, next) {
   // get all the users
   User.find({"_id": req.params.id}, function(err, userInfo) {
     if (err) {
