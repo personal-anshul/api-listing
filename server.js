@@ -3,7 +3,8 @@ var express = require('express'),
   http = require('http'),
   mongoose = require('mongoose'),
   fs = require("fs"),
-  url = 'mongodb://localhost:27017/users';
+  url = 'mongodb://localhost:27017/users',
+  favicon = require('serve-favicon');
 
 mongoose.connect(url);
 
@@ -13,6 +14,7 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 var UserSchema = new mongoose.Schema({
     name: { type: String, required: true, unique: true },
